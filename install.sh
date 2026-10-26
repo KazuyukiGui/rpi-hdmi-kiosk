@@ -24,7 +24,7 @@ url_re='^https?://[]A-Za-z0-9._~:/?#@!&()*+,;=%[-]+$'
 
 echo "==> Installing packages..."
 apt-get update
-apt-get install -y cage chromium-browser fonts-noto-cjk
+apt-get install -y cage chromium-browser fonts-noto-cjk curl
 
 echo "==> Preparing user '${KIOSK_USER}'..."
 if ! id "${KIOSK_USER}" >/dev/null 2>&1; then

@@ -27,6 +27,30 @@ sudo ./install-chime.sh
 
 どちらも何度実行しても同じ状態になる。設定を変えたいときは再実行すればよい。
 
+## pharmacy-cam (会計案内表示) との連携
+
+このキオスクは [pharmacy-cam](https://github.com/KazuyukiGui/pharmacy-cam) の表示ページを映すために使う。
+
+```
+カメラ側ラズパイ (pharmacy-cam) ─ upload.php ─▶ Xserver: images/latest.jpg
+                                                   │
+                       index.html ◀────────────────┘
+                         ├ スマホ・PC (通常表示)
+                         └ このキオスク (?kiosk=1 で画像だけを全画面表示)
+```
+
+URL の末尾に `?kiosk=1` を付けて登録する:
+
+```bash
+sudo ./install.sh 'https://skgh.xsrv.jp/monitor/kaikei/?kiosk=1'
+```
+
+| 状況 | キオスクの表示 |
+|---|---|
+| 通常 | 会計の画像だけを黒背景で全画面表示 (見出し・ボタン・読み込み中の表示なし) |
+| 画像が 10 分以上更新されない (カメラ停止・通信断) | 古い番号を隠して「表示を停止しています」と案内 |
+| 起動直後にネットワーク未接続 | つながるまで最大 5 分待ってからブラウザを開く |
+
 ## 仕組み
 
 ```
