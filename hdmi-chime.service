@@ -1,0 +1,15 @@
+[Unit]
+Description=Play HDMI chime
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/lib/hdmi-kiosk/play-chime.sh
+# 毎回使い捨ての一時ユーザーで実行し、音声デバイス以外には触れられないようにする
+DynamicUser=yes
+SupplementaryGroups=audio
+DevicePolicy=closed
+DeviceAllow=char-alsa rw
+PrivateNetwork=yes
+ProtectSystem=strict
+ProtectHome=yes
+NoNewPrivileges=yes
