@@ -1,0 +1,13 @@
+[Unit]
+Description=HDMI chime schedule (Mon-Fri 08:30, 17:00)
+
+[Timer]
+OnCalendar=Mon..Fri *-*-* 08:30:00
+OnCalendar=Mon..Fri *-*-* 17:00:00
+# 既定 (1 分) だと最大 1 分遅れるため、1 秒精度にする
+AccuracySec=1s
+# 電源オフ中に過ぎた時刻のチャイムは、起動後に鳴らさない
+Persistent=false
+
+[Install]
+WantedBy=timers.target

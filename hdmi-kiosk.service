@@ -1,3 +1,5 @@
+# テンプレート。install.sh が @KIOSK_USER@ / @KIOSK_UID@ を置き換えて
+# /etc/systemd/system/ に配置する。
 [Unit]
 Description=HDMI browser kiosk
 After=network-online.target systemd-user-sessions.service
@@ -5,8 +7,7 @@ Wants=network-online.target
 Conflicts=getty@tty1.service
 
 [Service]
-User=admin
-Group=admin
+User=@KIOSK_USER@
 PAMName=login
 TTYPath=/dev/tty1
 TTYReset=yes
@@ -16,13 +17,14 @@ StandardInput=tty
 StandardOutput=journal
 StandardError=journal
 Environment=XDG_SESSION_TYPE=wayland
-Environment=XDG_RUNTIME_DIR=/run/user/1000
-Environment=KIOSK_URL=https://example.com
-ExecStartPre=/bin/mkdir -p /run/user/1000
-ExecStartPre=/bin/chown admin:admin /run/user/1000
-ExecStart=/home/admin/kiosk-start.sh
+Environment=XDG_RUNTIME_DIR=/run/user/@KIOSK_UID@
+EnvironmentFile=/etc/hdmi-kiosk/kiosk.env
+ExecStart=/usr/local/lib/hdmi-kiosk/kiosk-start.sh
 Restart=always
 RestartSec=5
+# NoNewPrivileges= などのサンドボックス設定は付けない。
+# snap 版 Chromium は setuid の snap-confine で起動するため、付けると起動できなくなる。
+# 代わりに「権限のない専用ユーザー」と「snap の AppArmor 閉じ込め」で保護する。
 
 [Install]
 WantedBy=graphical.target
