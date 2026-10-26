@@ -36,13 +36,13 @@ sudo ./install-chime.sh
                                                    │
                        index.html ◀────────────────┘
                          ├ スマホ・PC (通常表示)
-                         └ このキオスク (?kiosk=1 で画像だけを全画面表示)
+                         └ このキオスク (?mode=kiosk で画像だけを全画面表示)
 ```
 
-URL の末尾に `?kiosk=1` を付けて登録する:
+URL の末尾に `?mode=kiosk` を付けて登録する:
 
 ```bash
-sudo ./install.sh 'https://skgh.xsrv.jp/monitor/kaikei/?kiosk=1'
+sudo ./install.sh 'https://skgh.xsrv.jp/monitor/kaikei/?mode=kiosk'
 ```
 
 | 状況 | キオスクの表示 |
